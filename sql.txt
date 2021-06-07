@@ -1,0 +1,143 @@
+-- Adminer 4.7.6 MySQL dump
+
+SET NAMES utf8;
+SET time_zone = '+00:00';
+SET foreign_key_checks = 0;
+SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
+
+DROP TABLE IF EXISTS `available_color`;
+CREATE TABLE `available_color` (
+  `id_product` int(11) DEFAULT NULL,
+  `id_color` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `available_color` (`id_product`, `id_color`) VALUES
+(7,	1),
+(7,	2),
+(7,	3),
+(7,	4);
+
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE `category` (
+  `id_category` int(11) NOT NULL AUTO_INCREMENT,
+  `category_name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_category`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `category` (`id_category`, `category_name`) VALUES
+(1,	'Вышиванки'),
+(2,	'Скатерти'),
+(3,	'Пасхальные яйца'),
+(4,	'Платья'),
+(5,	'Ручники');
+
+DROP TABLE IF EXISTS `color`;
+CREATE TABLE `color` (
+  `id_color` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_color`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `comments`;
+CREATE TABLE `comments` (
+  `id_comments` int(11) NOT NULL AUTO_INCREMENT,
+  `id_user` int(11) DEFAULT NULL,
+  `id_product` int(11) DEFAULT NULL,
+  `comments` text,
+  PRIMARY KEY (`id_comments`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `favorites`;
+CREATE TABLE `favorites` (
+  `id_favorites` int(11) NOT NULL AUTO_INCREMENT,
+  `id_product` int(11) DEFAULT NULL,
+  `id_user` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_favorites`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `photo`;
+CREATE TABLE `photo` (
+  `id_photo` int(11) NOT NULL AUTO_INCREMENT,
+  `id_product` int(11) DEFAULT NULL,
+  `uri` varchar(255),
+  `uri_2` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_photo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `photo` (`id_photo`, `id_product`, `uri`, `uri_2`) VALUES
+(1,	7,	'catalog-item-img.jpg',	'catalog-slider.jpg'),
+(2,	8,	'catalog-item-img.jpg',	'like.svg'),
+(4,	10,	'catalog-item-img.jpg',	NULL),
+(5,	11,	'catalog-item-img.jpg',	NULL),
+(6,	12,	'catalog-item-img.jpg',	NULL),
+(7,	7,	'product-item.jpg',	''),
+(8,	7,	'comments1.jpg',	''),
+(9,	13,	'catalog-item-img.jpg',	'catalog-slider.jpg'),
+(10,	14,	'catalog-item-img.jpg',	'like.svg'),
+(11,	15,	'catalog-item-img.jpg',	NULL),
+(12,	16,	'catalog-item-img.jpg',	NULL),
+(13,	17,	'catalog-item-img.jpg',	'catalog-slider.jpg'),
+(15,	12,	'catalog-item-img.jpg',	NULL),
+(16,	11,	'catalog-item-img.jpg',	NULL),
+(18,	26,	'catalog-item-img.jpg',	NULL),
+(19,	39,	'catalog-item-img.jpg',	NULL),
+(20,	40,	'https://pbs.twimg.com/media/BNN-z84CYAIM7uJ.jpg',	NULL),
+(21,	41,	'https://pbs.twimg.com/media/BNN-z84CYAIM7uJ.jpg',	NULL);
+
+DROP TABLE IF EXISTS `photo_comments`;
+CREATE TABLE `photo_comments` (
+  `id_photo` int(11) DEFAULT NULL,
+  `id_comments` int(11) DEFAULT NULL,
+  `uri` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `product`;
+CREATE TABLE `product` (
+  `id_product` int(11) NOT NULL AUTO_INCREMENT,
+  `id_category` int(11) DEFAULT NULL,
+  `article` int(11) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `about` text,
+  `price` varchar(255) DEFAULT NULL,
+  `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `discount` int(11) DEFAULT '0',
+  `prev_img` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_product`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `product` (`id_product`, `id_category`, `article`, `name`, `about`, `price`, `date`, `discount`, `prev_img`) VALUES
+(7,	3,	1,	'fffff',	'качай игрddу ggfffgg',	'9999',	'2021-05-26 17:19:58',	40,	'5592790257product-item-next.jpg'),
+(8,	3,	2,	'bbbtbbb',	'bdbdfbdfbdbdfbdfbdfbbdfbdfbdfbdfbdbdfbdfbdf',	'1234',	'2021-05-26 17:19:58',	30,	'catalog-item-img.jpg');
+
+DROP TABLE IF EXISTS `product_param`;
+CREATE TABLE `product_param` (
+  `id_param` int(11) NOT NULL AUTO_INCREMENT,
+  `id_product` int(11) DEFAULT NULL,
+  `description` varchar(4369) DEFAULT NULL,
+  PRIMARY KEY (`id_param`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `product_param` (`id_param`, `id_product`, `description`) VALUES
+(2,	7,	'Состав: 1% полиэстер'),
+(3,	7,	'Правила ухода: стирать при температуре не выше 40 градусов, без отбеливателя. Гладить при температуре не выше 110 градусов'),
+(4,	7,	'Тип нанесения: сублимация на ткани'),
+(5,	8,	'Детали: двухслойный капюшон, мягкие манжеты на рукавах и по низу толстовки, спереди карман-кенгуру с мягким внутренним слоем');
+
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
+  `id_user` int(11) NOT NULL AUTO_INCREMENT,
+  `login` varchar(255) DEFAULT NULL,
+  `pass` varchar(255) DEFAULT NULL,
+  `mail` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_user`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `user` (`id_user`, `login`, `pass`, `mail`, `phone`) VALUES
+(2,	'dashed',	'zyA-MVr-xAp-swm',	'ewrwerwe@fasfasf',	'+375295463579');
+
+-- 2021-06-07 20:54:30
